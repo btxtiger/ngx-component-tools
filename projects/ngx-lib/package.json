@@ -1,0 +1,23 @@
+{
+   "name": "ngx-component-tools",
+   "version": "1.0.0",
+   "description": "A set of tools that boost Angular component's functionality.",
+   "keywords": [
+      "angular",
+      "angular-component"
+   ],
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/btxtiger/ngx-component-tools.git"
+   },
+   "license": "MIT",
+   "author": "",
+   "sideEffects": false,
+   "dependencies": {
+      "tslib": "^2.3.0"
+   },
+   "peerDependencies": {
+      "@angular/common": "15 - 100",
+      "@angular/core": "15 - 100"
+   }
+}

@@ -1,0 +1,102 @@
+<mat-toolbar class="drop-shadow">
+   <mat-toolbar-row>
+      <h2>ngx-component-tools</h2>
+      <span class="flex-grow"></span>
+      <button mat-icon-button color="primary" (click)="toggleDarkMode()">
+         <mat-icon>dark_mode</mat-icon>
+      </button>
+   </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="container mx-auto max-w-4xl p-4">
+   <!--   <router-outlet></router-outlet>-->
+
+   <mat-card class="my-4">
+      <mat-card-content>
+         <h2 class="my-4 text-2xl">URL Query Param Handler</h2>
+
+         <div class="my-4 flex flex-wrap items-center gap-4">
+            <mat-form-field>
+               <mat-label>Query Param Name</mat-label>
+               <input matInput [(ngModel)]="filterName" (keydown.enter)="addQueryParam()" />
+            </mat-form-field>
+
+            <mat-form-field>
+               <mat-label>Query Param Value</mat-label>
+               <input matInput [(ngModel)]="filterValue" (keydown.enter)="addQueryParam()" />
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" (click)="addQueryParam()">Add Query Param</button>
+         </div>
+
+         <div class="my-4">
+            <table class="table">
+               <thead>
+                  <tr>
+                     <th>Name</th>
+                     <th>Value</th>
+                     <th>Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let param of _getQueryParamsAsArray()">
+                     <th>{{ param.key }}</th>
+                     <td>{{ param.value }}</td>
+                     <td>
+                        <button mat-stroked-button color="warn" (click)="_removeQueryParam(param.key)">Delete</button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </mat-card-content>
+   </mat-card>
+
+   <mat-card class="my-4">
+      <mat-card-content>
+         <h2 class="my-4 text-2xl">URL Filter Handler</h2>
+
+         <div class="my-4">
+            <mat-form-field>
+               <mat-label>Filter Key Pattern</mat-label>
+               <input matInput [(ngModel)]="_urlFilterStructure" (ngModelChange)="_updateFilterPatternRegEx()" />
+            </mat-form-field>
+         </div>
+
+         <div class="my-4 flex flex-wrap items-center gap-4">
+            <mat-form-field>
+               <mat-label>Filter Name</mat-label>
+               <input matInput [(ngModel)]="filterName" (keydown.enter)="addFilter()" />
+            </mat-form-field>
+
+            <mat-form-field>
+               <mat-label>Filter Value</mat-label>
+               <input matInput [(ngModel)]="filterValue" (keydown.enter)="addFilter()" />
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" (click)="addFilter()">Add Filter</button>
+         </div>
+
+         <div class="my-4">
+            <table class="table">
+               <thead>
+                  <tr>
+                     <th>Name</th>
+                     <th>Value</th>
+                     <th>Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let filter of _getFiltersAsArray()">
+                     <th>{{ filter.key }}</th>
+                     <td>{{ filter.value }}</td>
+                     <td>
+                        <button mat-stroked-button color="warn" (click)="_removeFilter(filter.key)">Delete</button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </mat-card-content>
+   </mat-card>
+</div>

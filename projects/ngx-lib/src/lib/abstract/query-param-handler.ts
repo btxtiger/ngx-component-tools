@@ -1,19 +1,20 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription, skip } from 'rxjs';
 
+export type QueryParamMap = { [key: string]: string };
 export type QueryParamKeyValuePair = { key: string; value: string | undefined };
-export type QueryParamHandlerConfig = {
+export interface QueryParamHandlerConfig {
    ngRouter: Router;
    ngActivatedRoute: ActivatedRoute;
    isLoggingEnabled?: boolean;
-};
+}
 
 export abstract class QueryParamHandler {
    protected __ngRouter!: Router;
    protected __ngActivatedRoute!: ActivatedRoute;
    protected _isLoggingEnabled: boolean = false;
-   protected _queryParams: { [key: string]: string } = {};
-   protected _queryParamsChanged$ = new Subject<{ [key: string]: string }>();
+   protected _queryParams: QueryParamMap = {};
+   protected _queryParamsChanged$ = new Subject<QueryParamMap>();
 
    private _queryParamHandlerSubscriptions: Subscription[] = [];
 

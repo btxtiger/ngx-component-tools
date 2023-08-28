@@ -1,13 +1,14 @@
-import { Subject,Subscription } from 'rxjs';
-import { QueryParamHandler } from './query-param-handler';
+import { Subject, Subscription } from 'rxjs';
+import { QueryParamHandler, QueryParamHandlerConfig } from './query-param-handler';
 
 export type UrlFilterMap = { [key: string]: string };
 export type UrlFilterKeyValuePair = { key: string; value: string | undefined };
 export type UrlFilterRoutingStrategy = 'replace' | 'stack';
-export type UrlFilterHandlerConfig = {
+
+export interface UrlFilterHandlerConfig extends QueryParamHandlerConfig {
    urlFilterRoutingStrategy?: UrlFilterRoutingStrategy;
    urlFilterStructure?: string | 'filter[{name}]={value}' | 'filter.{name}={value}';
-};
+}
 
 export abstract class UrlFilterHandler extends QueryParamHandler {
    private _urlFilterRegex!: RegExp;
@@ -20,6 +21,12 @@ export abstract class UrlFilterHandler extends QueryParamHandler {
 
    /** Initialize Url Filter Handler */
    protected _initUrlFilterHandler(config: UrlFilterHandlerConfig): void {
+      this._initQueryParamHandler({
+         ngRouter: config.ngRouter,
+         ngActivatedRoute: config.ngActivatedRoute,
+         isLoggingEnabled: config.isLoggingEnabled,
+      });
+
       this._urlFilterRoutingStrategy = config.urlFilterRoutingStrategy || 'replace';
       this._urlFilterStructure = config.urlFilterStructure || 'filter[{name}]={value}';
       this._updateFilterPatternRegEx();
@@ -30,6 +37,7 @@ export abstract class UrlFilterHandler extends QueryParamHandler {
 
    /** Shutdown Url Filter Handler */
    protected _destroyUrlFilterHandler(): void {
+      this._destroyQueryParamHandler();
       this._urlFilterHandlerSubscriptions.forEach((sub) => sub.unsubscribe());
    }
 

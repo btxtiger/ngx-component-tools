@@ -23,18 +23,15 @@ export class AppComponent extends UrlFilterHandler implements OnInit, OnDestroy 
    }
 
    ngOnInit(): void {
-      this._initQueryParamHandler({
+      this._initUrlFilterHandler({
          ngRouter: this.router,
          ngActivatedRoute: this.route,
          isLoggingEnabled: false,
-      });
-      this._initUrlFilterHandler({
          urlFilterRoutingStrategy: 'stack'
       });
    }
 
    ngOnDestroy(): void {
-      this._destroyQueryParamHandler();
       this._destroyUrlFilterHandler();
    }
 
@@ -43,6 +40,9 @@ export class AppComponent extends UrlFilterHandler implements OnInit, OnDestroy 
       if (this.filterName && this.filterValue) {
          this._upsertFilter(this.filterName, this.filterValue);
          this.filterName = this.filterValue = undefined;
+
+         // @ts-ignore
+         document.activeElement.blur()
       }
    }
 
@@ -51,6 +51,9 @@ export class AppComponent extends UrlFilterHandler implements OnInit, OnDestroy 
       if (this.filterName && this.filterValue) {
          this._upsertQueryParam(this.filterName, this.filterValue);
          this.filterName = this.filterValue = undefined;
+
+         // @ts-ignore
+         document.activeElement.blur()
       }
    }
 

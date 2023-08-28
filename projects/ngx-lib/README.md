@@ -26,9 +26,13 @@ export class AppComponent extends QueryParamHandler implements OnInit, OnDestroy
 }
 ```
 
-### Methods
+### Properties/Methods
 
 ```ts
+protected _queryParams: QueryParamMap;
+
+protected _queryParamsChanged$: Subject<QueryParamMap>;
+
 _updateQueryParams(newParams: { [key: string]: string }, replaceUrl: boolean): Promise<void>
 
 _upsertQueryParam(key: string, value: string, replaceUrl: boolean = true): Promise<void>
@@ -41,6 +45,7 @@ _getQueryParamsAsArray(): QueryParamKeyValuePair[]
 ## UrlFilterHandler
 
 Methods that help you to manage url filters in your components.
+The `UrlFilterHandler` uses the `QueryParamHandler` under the hood.
 
 ```ts
 export class AppComponent extends UrlFilterHandler implements OnInit, OnDestroy {
@@ -49,26 +54,27 @@ export class AppComponent extends UrlFilterHandler implements OnInit, OnDestroy 
    }
 
    ngOnInit(): void {
-      this._initQueryParamHandler({
+      this._initUrlFilterHandler({
          ngRouter: this.router,
          ngActivatedRoute: this.route,
          isLoggingEnabled: true,
-      });
-      this._initUrlFilterHandler({
          urlFilterRoutingStrategy: 'stack',
       });
    }
 
    ngOnDestroy(): void {
-      this._destroyQueryParamHandler();
       this._destroyUrlFilterHandler();
    }
 }
 ```
 
-### Methods
+### Properties/Methods
 
 ```ts
+protected _urlFilters: UrlFilterMap;
+
+protected _urlFilterChanged$: Subject<UrlFilterMap>;
+
 protected _upsertFilter(key: string, value: string): void
 
 protected _removeFilter(key: string): void

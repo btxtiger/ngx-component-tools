@@ -1,6 +1,6 @@
 # ngx-component-tools
 
-A set of tools that boost Angular component's functionality.
+A set of tools that supercharges Angular component's functionality.
 
 ## QueryParamHandler
 

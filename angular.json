@@ -23,11 +23,18 @@
                   "outputPath": "docs",
                   "index": "src/index.html",
                   "main": "src/main.ts",
-                  "polyfills": ["zone.js"],
+                  "polyfills": [
+                     "zone.js"
+                  ],
                   "tsConfig": "tsconfig.app.json",
                   "inlineStyleLanguage": "scss",
-                  "assets": ["src/favicon.ico", "src/assets"],
-                  "styles": ["src/styles.scss"],
+                  "assets": [
+                     "src/favicon.ico",
+                     "src/assets"
+                  ],
+                  "styles": [
+                     "src/styles.scss"
+                  ],
                   "scripts": []
                },
                "configurations": {
@@ -90,7 +97,8 @@
                   "inlineStyleLanguage": "scss",
                   "assets": ["src/favicon.ico", "src/assets"],
                   "styles": ["src/styles.scss"],
-                  "scripts": []
+                  "scripts": [],
+                  "karmaConfig": "karma.conf.js"
                }
             }
          }
@@ -100,6 +108,14 @@
          "root": "projects/ngx-lib",
          "sourceRoot": "projects/ngx-lib/src",
          "prefix": "lib",
+         "schematics": {
+            "@schematics/angular:component": {
+               "style": "scss",
+               "standalone": true,
+               "viewEncapsulation": "None",
+               "changeDetection": "OnPush"
+            }
+         },
          "architect": {
             "build": {
                "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -120,13 +136,15 @@
                "builder": "@angular-devkit/build-angular:karma",
                "options": {
                   "tsConfig": "projects/ngx-lib/tsconfig.spec.json",
-                  "polyfills": ["zone.js", "zone.js/testing"]
+                  "polyfills": ["zone.js", "zone.js/testing"],
+                  "inlineStyleLanguage": "scss",
+                  "karmaConfig": "karma.conf.js"
                }
             }
          }
       }
-  },
-  "cli": {
-    "analytics": false
-  }
+   },
+   "cli": {
+      "analytics": false
+   }
 }

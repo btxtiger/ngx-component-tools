@@ -1,7 +1,8 @@
 {
    "root": true,
-   "ignorePatterns": [],
+   "ignorePatterns": ["node_modules/**/*"],
    "plugins": ["jsdoc", "decorator-position", "@typescript-eslint"],
+   "parser": "@typescript-eslint/parser",
    "parserOptions": {
       "ecmaVersion": 2020,
       "sourceType": "module"
@@ -9,10 +10,6 @@
    "overrides": [
       {
          "files": ["*.ts"],
-         "parserOptions": {
-            "project": ["tsconfig.json"],
-            "createDefaultProgram": true
-         },
          "extends": ["plugin:@angular-eslint/recommended", "plugin:@angular-eslint/template/process-inline-templates"],
          "rules": {
             "@angular-eslint/no-empty-lifecycle-method": "off",
@@ -48,9 +45,14 @@
             "@typescript-eslint/explicit-member-accessibility": [
                "error",
                {
+                  "accessibility": "explicit",
                   "ignoredMethodNames": ["ngOnInit", "ngOnChanges", "ngOnDestroy", "ngAfterViewInit"],
                   "overrides": {
-                     "constructors": "no-public"
+                     "constructors": "no-public",
+                     "accessors": "explicit",
+                     "methods": "explicit",
+                     "properties": "explicit",
+                     "parameterProperties": "explicit"
                   }
                }
             ],
@@ -60,6 +62,8 @@
                   "require": {
                      "FunctionDeclaration": true
                   },
+                  "enableFixer": true,
+                  "fixerMessage": " == Undocumented Function ==",
                   "checkConstructors": false,
                   "contexts": [
                      "MethodDefinition:not(MethodDefinition[key.name=\"ngOnInit\"]):not(MethodDefinition[key.name=\"ngOnDestroy\"]):not(MethodDefinition[key.name=\"ngOnChanges\"]):not(MethodDefinition[key.name=\"ngAfterViewInit\"])"
@@ -72,7 +76,9 @@
       {
          "files": ["*.html"],
          "extends": ["plugin:@angular-eslint/template/recommended"],
-         "rules": {}
+         "rules": {
+            "@angular-eslint/template/prefer-self-closing-tags": "error"
+         }
       }
    ]
 }

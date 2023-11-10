@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Subscription, skip } from 'rxjs';
+import { ReplaySubject, Subscription } from 'rxjs';
 
 export type QueryParamMap = { [key: string]: string };
 export type QueryParamKeyValuePair = { key: string; value: string | undefined };
@@ -14,7 +14,7 @@ export abstract class QueryParamHandler {
    protected __ngActivatedRoute!: ActivatedRoute;
    protected _isLoggingEnabled: boolean = false;
    protected _queryParams: QueryParamMap = {};
-   protected _queryParamsChanged$ = new Subject<QueryParamMap>();
+   protected _queryParamsChanged$ = new ReplaySubject<QueryParamMap>(1);
 
    private _queryParamHandlerSubscriptions: Subscription[] = [];
 
@@ -35,7 +35,7 @@ export abstract class QueryParamHandler {
 
    /** Initialize Query Params */
    private _initializeQueryParams(): void {
-      const sub = this.__ngActivatedRoute.queryParams.pipe(skip(1)).subscribe((queryParams) => {
+      const sub = this.__ngActivatedRoute.queryParams.subscribe((queryParams) => {
          if (this._isLoggingEnabled) {
             console.log('–– QueryParamHandler: QueryParams changed', queryParams);
          }

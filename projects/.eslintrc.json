@@ -1,0 +1,34 @@
+{
+   "extends": ["../.eslintrc.json"],
+   "overrides": [
+      {
+         "files": ["*.ts"],
+         "rules": {
+            "@typescript-eslint/naming-convention": [
+               "error",
+               {
+                  "selector": "class",
+                  "format": ["PascalCase"],
+                  "prefix": ["Ngx"]
+               }
+            ],
+            "@angular-eslint/directive-selector": [
+               "error",
+               {
+                  "type": "attribute",
+                  "prefix": "ngx",
+                  "style": "camelCase"
+               }
+            ],
+            "@angular-eslint/component-selector": [
+               "error",
+               {
+                  "type": "element",
+                  "prefix": "ngx",
+                  "style": "kebab-case"
+               }
+            ]
+         }
+      }
+   ]
+}

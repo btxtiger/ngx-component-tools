@@ -1,4 +1,4 @@
-import { Subject, Subscription } from 'rxjs';
+import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import { QueryParamHandler, QueryParamHandlerConfig } from './query-param-handler';
 
 export type UrlFilterMap = { [key: string]: string };
@@ -10,10 +10,10 @@ export interface UrlFilterHandlerConfig extends QueryParamHandlerConfig {
    urlFilterStructure?: string | 'filter[{name}]={value}' | 'filter.{name}={value}';
 }
 
-export abstract class UrlFilterHandler extends QueryParamHandler {
+export class UrlFilterHandler extends QueryParamHandler {
    private _urlFilterRegex!: RegExp;
    protected _urlFilters: UrlFilterMap = {};
-   protected _urlFilterChanged$ = new Subject<UrlFilterMap>();
+   protected _urlFilters$ = new ReplaySubject<UrlFilterMap>(1);
    protected _urlFilterRoutingStrategy!: UrlFilterRoutingStrategy;
    protected _urlFilterStructure!: string;
 
@@ -70,6 +70,8 @@ export abstract class UrlFilterHandler extends QueryParamHandler {
             console.groupEnd();
             console.log('–– UrlFilterHandler: Initialized Filters', this._urlFilters);
          }
+
+         this._urlFilters$.next(this._urlFilters);
       });
 
       this._urlFilterHandlerSubscriptions.push(sub);

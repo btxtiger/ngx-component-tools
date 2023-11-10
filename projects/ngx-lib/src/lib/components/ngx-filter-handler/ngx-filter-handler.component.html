@@ -1,0 +1,7 @@
+<div class="p-4">
+   <h2 class="p-4 text-2xl">Filters</h2>
+   <div class="p-4" *ngFor="let filter of urlFilterMap$ | async">
+      {{ filter.key }}: {{ filter.value }}
+   </div>
+
+</div>
